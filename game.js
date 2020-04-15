@@ -60,6 +60,8 @@ function update() {
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 0, dy: -5.2 });
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: -1, dy: -5 });
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 1, dy: -5 });
+		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: -2, dy: -4.8 });
+		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 2, dy: -4.8 });
 	};
 
 	//äâèãàåì ïóëè
