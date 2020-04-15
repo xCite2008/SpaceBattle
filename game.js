@@ -45,7 +45,7 @@ function update() {
 	timer++;
 
 	// asteroid generator
-	if (timer % 5 == 0) asterCoords.push({
+	if (timer % 3 == 0) asterCoords.push({
 		x: Math.random() * 550,
 		y: -50,
 		dx: Math.random() * 2 - 1,
