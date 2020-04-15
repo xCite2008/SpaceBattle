@@ -45,7 +45,7 @@ function update() {
 	timer++;
 
 	// asteroid generator
-	if (timer % 10 == 0) asterCoords.push({
+	if (timer % 5 == 0) asterCoords.push({
 		x: Math.random() * 550,
 		y: -50,
 		dx: Math.random() * 2 - 1,
@@ -55,14 +55,14 @@ function update() {
 		dxangle: Math.random() * 0.1 - 0.05
 	});
 
-	//âûñòðåë
+	//Ã¢Ã»Ã±Ã²Ã°Ã¥Ã«
 	if (timer % 20 == 0) {
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 0, dy: -5.2 });
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: -1, dy: -5 });
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 1, dy: -5 });
 	};
 
-	//äâèãàåì ïóëè
+	//Ã¤Ã¢Ã¨Ã£Ã Ã¥Ã¬ Ã¯Ã³Ã«Ã¨
 	for (i in bullets) {
 		bullets[i].x = bullets[i].x + bullets[i].dx;
 		bullets[i].y = bullets[i].y + bullets[i].dy;
@@ -95,7 +95,7 @@ function update() {
 		if (asterCoords[i].exist == false) asterCoords.splice(i, 1);
 	}
 
-	//àíèìàöèÿ âçðûâîâ
+	//Ã Ã­Ã¨Ã¬Ã Ã¶Ã¨Ã¿ Ã¢Ã§Ã°Ã»Ã¢Ã®Ã¢
 	for (i in expl) {
 		expl[i].animx = expl[i].animx + 0.5;
 		if (expl[i].animx > 7) {
