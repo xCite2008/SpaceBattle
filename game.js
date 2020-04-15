@@ -45,7 +45,7 @@ function update() {
 	timer++;
 
 	// asteroid generator
-	if (timer % 3 == 0) asterCoords.push({
+	if (timer % 5 == 0) asterCoords.push({
 		x: Math.random() * 550,
 		y: -50,
 		dx: Math.random() * 2 - 1,
@@ -56,7 +56,7 @@ function update() {
 	});
 
 	//âûñòðåë
-	if (timer % 20 == 0) {
+	if (timer % 10 == 0) {
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 0, dy: -5.2 });
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: -1, dy: -5 });
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 1, dy: -5 });
