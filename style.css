@@ -1,0 +1,14 @@
+body {
+	background-color: #000000;
+	color: #00ff00;
+}
+
+#wrapper {
+	width: 600px;
+	//height: 600px;
+	margin: 0 auto;
+}
+
+canvas {
+	cursor: none;
+}
