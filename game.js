@@ -1,21 +1,28 @@
-var canvas = document.getElementById('game');
-var context = canvas.getContext('2d');
+var canvas = document.getElementById("game");
+var context = canvas.getContext("2d");
 
 var asteroid = [];
 var bullets = [];
 var expl = [];
 var timer = 0;
 var score = 0;
+var fireflag = false;
 var fireforce = 1; //start fire force
 var ship = { x: 300, y: 300 }; //, animx: 0, animy: 0};
 
-var bgmove = {e: 1, f: 1};
+var bgmove = { e: 1, f: 1 };
+
+var musicbutton = document.getElementById("startmusic");
 
 
-var bgAudio = new Audio(); // Создаём новый элемент Audio
-bgAudio.src = 'sounds/bg.mp3'; // Указываем путь к звуку "клика"
+// --- init audio
+var bgAudio = new Audio();
+bgAudio.src = 'sounds/bg.ogg';
 bgAudio.loop = true;
-bgAudio.autoplay = true; // Автоматически запускаем
+bgAudio.volume = 0.2;
+bgAudio.autoplay;
+
+
 
 
 var asteroidImage = new Image();
@@ -41,12 +48,32 @@ canvas.addEventListener("mousemove", function (event) {
 	bgmove.f = event.offsetY - 400;
 });
 
+canvas.addEventListener("mousedown", function (event) {
+	if (musicbutton.click) bgAudio.play();
+	fireflag = true;
+});
 
-//if explosion.png was loaded start the game
-backgroundImage.onload = function () {
-	bgAudio.play();
+canvas.addEventListener("mouseup", function (event) {
+	fireflag = false;
+});
+
+
+//pause if window is inactive and resume if active
+document.addEventListener('visibilitychange', function () {
+	if (document.hidden) { // pausing
+		bgAudio.pause();
+	} else { // resume
+		bgAudio.play();
+	}
+});
+
+
+//if background.png was loaded start the game
+backgroundImage.onload = function () {		
 	game();
 }
+
+
 //main game cycle
 function game() {
 	update();
@@ -56,6 +83,10 @@ function game() {
 
 function update() {
 	timer++;
+
+	if (score >= 20 && score < 40) fireforce = 2;
+	if (score >= 40 && score < 60) fireforce = 3;
+
 
 	// asteroid generator
 	if (timer % 10 == 0) {
@@ -74,14 +105,14 @@ function update() {
 		});
 	}
 
-	//выстрел
-	if (timer % 10 == 0) {
+	//bullets generator
+	if (timer % 10 == 0 && fireflag == true) {
 		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 0, dy: -5.2, force: fireforce });
-		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: -1, dy: -5 });
-		bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 1, dy: -5 });
+		//bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: -1, dy: -5 });
+		//bullets.push({ x: ship.x + 15, y: ship.y - 20, dx: 1, dy: -5 });
 	};
 
-	//двигаем пули
+	//bullets trajectory
 	for (i in bullets) {
 		bullets[i].x = bullets[i].x + bullets[i].dx;
 		bullets[i].y = bullets[i].y + bullets[i].dy;
@@ -115,12 +146,12 @@ function update() {
 					bullets.splice(j, 1);
 				}
 			}
-			
+
 		}
 		if (asteroid[i].exist == false) asteroid.splice(i, 1);
 	}
 
-	//анимация взрывов
+	// --- animation of explosion
 	for (i in expl) {
 		expl[i].animx = expl[i].animx + 0.5;
 		if (expl[i].animx > 7) {
@@ -132,14 +163,15 @@ function update() {
 }
 
 function render() {
-	//очистка холста (не обязательно)
+	//clear canvas
 	context.clearRect(0, 0, 600, 600);
 
 	//background first
 	context.save();
-	context.transform(1.2, 0, 0, 1.2, bgmove.e/25, bgmove.f/25); 
+	context.transform(1.2, 0, 0, 1.2, bgmove.e / 25, bgmove.f / 25);
 	context.drawImage(backgroundImage, -20, -20, 600, 600);
 	context.restore();
+
 	//then asteroids
 	//for (i in asteroid) context.drawImage(asteroidImage, asteroid[i].x, asteroid[i].y, 50, 50);
 	for (i in asteroid) {
@@ -147,10 +179,6 @@ function render() {
 		context.translate(asteroid[i].x + 25, asteroid[i].y + 25);
 		context.rotate(asteroid[i].angle);
 		context.drawImage(asteroidImage, -25, -25, asteroid[i].size, asteroid[i].size);
-		
-		//context.fillStyle = "#ffffff";
-		//context.font = "italic 20pt Arial";
-		//context.fillText(asteroid[i].force, 25, 0);
 		context.restore();
 	}
 	//then spaceship
@@ -165,6 +193,10 @@ function render() {
 	context.font = "italic 30pt Arial";
 	context.fillText(score, 15, 35);
 	context.strokeText(score, 15, 35);
+
+	context.fillStyle = "#7777ff";
+	context.font = "italic 10pt Arial";
+	context.fillText("Frames: " + timer + ", Fireforce: " + fireforce, 10, 585);
 }
 
 
@@ -178,4 +210,3 @@ var requestAnimFrame = (function () {
 			window.setTimeout(callback, 1000 / 20);
 		};
 })();
-
