@@ -1,11 +1,11 @@
 body {
 	background-color: #000000;
-	color: #00ff00;
+	color: #ffffff;
 }
 
 #wrapper {
 	width: 600px;
-	//height: 600px;
+	/* height: 600px; */
 	margin: 0 auto;
 }
 
@@ -15,4 +15,15 @@ canvas {
 
 #startmusic {
 	display: none;
+}
+
+.info {
+	display: inherit;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 20px;
+	z-index: 100;
+	top: -300px;
+	width: 600px;
+	text-align: center;
+	margin: 0 auto 0 auto;
 }
